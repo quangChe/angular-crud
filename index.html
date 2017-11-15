@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app="crudApp">
+  <head>
+    <meta charset="utf-8">
+    <title>List of Friends</title>
+    <script src="https://code.angularjs.org/1.6.6/angular.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+  <body>
+
+    <div ng-controller="appCtrl">
+
+      <div id="friends-list" ng-if="currentView === 'listView'">
+        <h1 class="title">List of Friends</h1>
+        <div ng-if="friends.length == 0">
+          <h2 class="notice">Looks like you have not added any friends... Starting adding!</h2>
+        </div>
+        <div ng-if="friends.length > 0">
+          <ul ng-repeat="friend in friends track by $index">
+            <li class="friend-box">
+              <div class="image">
+                <img class="profile-img" src="{{friend.image}}" alt="Image of a friend.">
+              </div>
+              <div class="details">
+                <h2>{{friend.name}}</h2>
+                <p><strong>Address:</strong> {{friend.address}}</p>
+                <p><strong>Age:</strong> {{friend.age}} years old</p>
+                <p><strong>Occupation:</strong> {{friend.occupation}}</p>
+                <button class="delete" type="button" ng-click="deleteFriend($index)">
+                  <i class="fa fa-minus-circle" aria-hidden="true"></i> Delete Friend
+                </button>
+                <button class="default" type="button" ng-click="editFriend($index)">Edit Friend</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <button class="submit" type="submit" name="button" ng-click="changeView('createView')">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i> Add A New Friend!
+        </button>
+      </div>
+
+      <div id="add-friend" ng-if="currentView === 'createView'">
+        <div class="container">
+          <h1 class="title">Add a Friend</h1>
+
+          <form method="post">
+            <h3>What is your friend's name?</h3>
+            <input type="text" placeholder="Full Name" ng-model="$ctrl.friend.name.value"/>
+            <h3>Where does this friend live?</h3>
+            <input type="text" placeholder="Address" ng-model="$ctrl.friend.address.value"/>
+            <h3>How old is this friend?</h3>
+            <input type="number" placeholder="Age (in Years)" ng-model="$ctrl.friend.age.value"/>
+            <h3>What does this friend do?</h3>
+            <input type="text" placeholder="Job Title" ng-model="$ctrl.friend.occupation.value"/>
+            <h3>Link to Image:</h3>
+            <input type="text" placeholder="URL to Image" ng-model="$ctrl.friend.image.value"/>
+            <div class="buttons">
+              <button class="submit" type="submit" name="button" ng-click="addFriend($ctrl.friend)">
+                <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
+              </button>
+              <button class="default" type="button" name="button" ng-click="changeView('listView')">
+                <i class="fa fa-times-circle" aria-hidden="true"></i> Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="edit-friend" ng-if="currentView === 'editView'">
+        <div class="container">
+          <h1 class="title">Edit Details</h1>
+
+          <form method="post">
+
+            <h3>What is your friend's name?</h3>
+            <input type="text" placeholder="{{edit.name}}" ng-model="$ctrl.edit.name.value"/>
+            <h3>Where does this friend live?</h3>
+            <input type="text" placeholder="{{edit.address}}" ng-model="$ctrl.edit.address.value"/>
+            <h3>How old is this friend?</h3>
+            <input type="number" placeholder="{{edit.age}}" ng-model="$ctrl.edit.age.value"/>
+            <h3>What does this friend do?</h3>
+            <input type="text" placeholder="{{edit.occupation}}" ng-model="$ctrl.edit.occupation.value"/>
+            <h3>Link to Image:</h3>
+            <input type="text" placeholder="{{edit.image}}" ng-model="$ctrl.edit.image.value"/>
+
+            <div class="buttons">
+              <button class="submit" type="submit" name="button" ng-click="submitEdit($ctrl.edit, $index)">
+                <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
+              </button>
+              <button class="default" type="button" ng-click="changeView('listView')">
+                <i class="fa fa-times-circle" aria-hidden="true"></i> Cancel
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+      <div id="delete-friend" ng-if="currentView === 'deleteView'">
+        <div class="container">
+          <h1 class="title">Are you sure?</h1>
+          <h2>"It was good while it lasted. I'm going to miss you..."</h2>
+          <img class="profile-img" src="{{delete.image}}" alt="Image of friend to delete.">
+
+          <p class="del-notice">Are you sure you want to delete {{delete.name}} from your life?</p>
+          <div class="buttons">
+            <button class="submit" type="submit" name="button" ng-click="submitDelete()">
+              <i class="fa fa-check-circle" aria-hidden="true"></i> I'm Sure
+            </button>
+            <button class="default" type="button" ng-click="changeView('listView')">
+              <i class="fa fa-times-circle" aria-hidden="true"></i> No, Keep {{delete.name}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </body>
+</html>
