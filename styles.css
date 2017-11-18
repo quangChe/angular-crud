@@ -17,15 +17,19 @@ button {
   outline: none;
   font-family: "Comfortaa";
   border-radius: 5px;
-  border-bottom: 3px solid rgba(0, 0, 0, .8);
-  border-left: 3px solid rgba(0, 0, 0, .8);
-  border-top: none;
-  border-right: none;
+  border: none;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, .15),
+              -2px 2px 2px rgba(0, 0, 0, .15),
+              4px 4px 6px rgba(0, 0, 0, .1),
+              -4px 4px 6px rgba(0, 0, 0, .1),
+              6px 6px 10px rgba(0, 0, 0, .05),
+              -6px 6px 10px rgba(0, 0, 0, .05);
 }
 
 button:hover {
   cursor: pointer;
-  border: none;
+  box-shadow: none;
+  transition-duration: .3s;
 }
 
 ul {
